@@ -1,0 +1,7 @@
+﻿  fluids.c
+d:\github\scientificvisualization\smoke\fluids.c(112): warning C4013: 'exp' undefined; assuming extern returning int
+d:\github\scientificvisualization\smoke\fluids.c(199): warning C4013: 'fabs' undefined; assuming extern returning int
+d:\github\scientificvisualization\smoke\fluids.c(232): warning C4013: 'atan2' undefined; assuming extern returning int
+d:\github\scientificvisualization\smoke\fluids.c(379): warning C4013: 'sqrt' undefined; assuming extern returning int
+fluids.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+  Smoke.vcxproj -> D:\Github\ScientificVisualization\Smoke\Debug\Smoke.exe

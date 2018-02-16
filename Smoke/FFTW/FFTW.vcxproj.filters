@@ -1,0 +1,445 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\rfftw">
+      <UniqueIdentifier>{e945cac3-3170-411c-b6e8-fd35f2403967}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\fftw">
+      <UniqueIdentifier>{10aa5c18-f8e4-45f7-9f2c-6ec17eb400af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_1.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_10.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_11.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_12.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_128.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_13.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_14.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_15.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_16.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_2.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_3.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_32.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_4.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_5.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_6.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_64.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_7.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_8.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fcr_9.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhb_10.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhb_16.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhb_2.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhb_3.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhb_32.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhb_4.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhb_5.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhb_6.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhb_7.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhb_8.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhb_9.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhf_10.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhf_16.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhf_2.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhf_3.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhf_32.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhf_4.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhf_5.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhf_6.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhf_7.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhf_8.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\fhf_9.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_1.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_10.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_11.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_12.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_128.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_13.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_14.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_15.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_16.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_2.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_3.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_32.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_4.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_5.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_6.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_64.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_7.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_8.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\frc_9.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\rconfig.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\rexec.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\rexec2.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\rfftwf77.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\rfftwnd.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\rgeneric.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\rfftw\rplanner.c">
+      <Filter>Source Files\rfftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\config.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\executor.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fftwf77.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fftwnd.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_1.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_10.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_11.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_12.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_13.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_14.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_15.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_16.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_2.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_3.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_32.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_4.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_5.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_6.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_64.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_7.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_8.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fn_9.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_1.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_10.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_11.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_12.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_13.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_14.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_15.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_16.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_2.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_3.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_32.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_4.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_5.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_6.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_64.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_7.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_8.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\fni_9.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftw_10.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftw_16.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftw_2.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftw_3.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftw_32.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftw_4.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftw_5.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftw_6.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftw_64.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftw_7.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftw_8.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftw_9.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftwi_10.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftwi_16.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftwi_2.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftwi_3.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftwi_32.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftwi_4.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftwi_5.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftwi_6.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftwi_64.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftwi_7.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftwi_8.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\ftwi_9.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\generic.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\malloc.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\planner.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\putils.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\rader.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\timer.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\twiddle.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\wisdom.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\fftw-2.1.3\fftw\wisdomio.c">
+      <Filter>Source Files\fftw</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
