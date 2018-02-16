@@ -1,6 +1,8 @@
 d:\github\scientificvisualization\smoke\bin\intermediate\debug\fluids.obj
 d:\github\scientificvisualization\smoke\bin\debug\smoke.exe
 d:\github\scientificvisualization\smoke\bin\debug\smoke.pdb
+d:\github\scientificvisualization\smoke\bin\debug\smoke.ipdb
+d:\github\scientificvisualization\smoke\bin\debug\smoke.iobj
 d:\github\scientificvisualization\smoke\bin\intermediate\debug\config.obj
 d:\github\scientificvisualization\smoke\bin\intermediate\debug\executor.obj
 d:\github\scientificvisualization\smoke\bin\intermediate\debug\fcr_1.obj
@@ -149,3 +151,4 @@ d:\github\scientificvisualization\smoke\bin\intermediate\debug\smoke.tlog\cl.wri
 d:\github\scientificvisualization\smoke\bin\intermediate\debug\smoke.tlog\link.command.1.tlog
 d:\github\scientificvisualization\smoke\bin\intermediate\debug\smoke.tlog\link.read.1.tlog
 d:\github\scientificvisualization\smoke\bin\intermediate\debug\smoke.tlog\link.write.1.tlog
+d:\github\scientificvisualization\smoke\bin\intermediate\debug\smoke.tlog\smoke.write.1u.tlog
