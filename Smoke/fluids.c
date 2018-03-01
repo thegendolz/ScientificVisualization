@@ -360,7 +360,7 @@ void visualize(void)
 				double step_y = vector_dim_y / DIM;
 			
 				if (floor(step_x * i) == step_x * i && floor(step_y * j) == step_x * j) { // Current position is also in the grid
-					int idx = (int)step_y * j * DIM + step_x * i;
+					int idx = step_y * j * DIM + step_x * i;
 
 					direction_to_color(vvx[idx], vvy[idx], color_dir);
 					glVertex2f(wn + (fftw_real)i * wn, hn + (fftw_real)j * hn);
