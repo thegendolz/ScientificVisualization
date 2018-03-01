@@ -1,2 +1,0 @@
-CMakeLists.txt not found in D:\Github\ScientificVisualization
-Environment (MinGW/Cygwin) is not selected Configure

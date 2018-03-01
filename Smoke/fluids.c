@@ -5,11 +5,13 @@
 #include <rfftw.h>              //the numerical simulation FFTW library
 #include <GL/glut.h>            //the GLUT graphics library
 #include <stdio.h>              //for printing the help text
+#include <math.h>              //for printing the help text
+
 
 
 //--- SIMULATION PARAMETERS ------------------------------------------------------------------------
 const int DIM = 50;				//size of simulation grid
-double dt = 0.4;				//simulation time step
+double dt = 0.04;				//simulation time step
 float visc = 0.001;				//fluid viscosity
 fftw_real *vx, *vy;             //(vx,vy)   = velocity field at the current moment
 fftw_real *vx0, *vy0;           //(vx0,vy0) = velocity field at the previous moment
@@ -19,7 +21,11 @@ rfftwnd_plan plan_rc, plan_cr;  //simulation domain discretization
 
 
 //--- VISUALIZATION PARAMETERS ---------------------------------------------------------------------
+int vector_dim_x = 50;			//Size of vector grid
+int vector_dim_y = 50;			//Size of vector grid
 int   winWidth, winHeight;      //size of the graphics window, in pixels
+int   vector_type = 0;			//Vector type: velocity, force field (0, 1)
+int   scalar_type = 0;			//Scalar type: velocity, density, force magnitude (0, 1, 2)
 int   color_dir = 0;            //use direction color-coding or not
 float vec_scale = 1000;			//scaling of hedgehogs
 int   draw_smoke = 0;           //draw the smoke or not
@@ -69,6 +75,33 @@ void FFT(int direction,void* vx)
 
 int clamp(float x) 
 { return ((x)>=0.0?((int)(x)):(-((int)(1-(x))))); }
+
+
+int rotational_increment(int x, int max)
+{
+	if (x + 1 >= max)
+		return 0;
+	else
+		return x + 1;
+}
+
+
+float BilinearInterpolation(float q11, float q12, float q21, float q22, float x1, float x2, float y1, float y2, float x, float y) //https://helloacm.com/cc-function-to-compute-the-bilinear-interpolation/
+{
+	float x2x1, y2y1, x2x, y2y, yy1, xx1;
+	x2x1 = x2 - x1;
+	y2y1 = y2 - y1;
+	x2x = x2 - x;
+	y2y = y2 - y;
+	yy1 = y - y1;
+	xx1 = x - x1;
+	return 1.0 / (x2x1 * y2y1) * (
+		q11 * x2x * y2y +
+		q21 * xx1 * y2y +
+		q12 * x2x * yy1 +
+		q22 * xx1 * yy1
+		);
+}
 
 //solve: Solve (compute) one step of the fluid flow simulation
 void solve(int n, fftw_real* vx, fftw_real* vy, fftw_real* vx0, fftw_real* vy0, fftw_real visc, fftw_real dt) 
@@ -192,7 +225,7 @@ void do_one_simulation_step(void)
 
 //rainbow: Implements a color palette, mapping the scalar 'value' to a rainbow color RGB
 void rainbow(float value,float* R,float* G,float* B)
-{                          
+{
    const float dx=0.8; 
    if (value<0) value=0; if (value>1) value=1;
    value = (6-2*dx)*value+dx;
@@ -247,9 +280,10 @@ void direction_to_color(float x, float y, int method)
 //visualize: This is the main visualization function
 void visualize(void)
 {
-	int        i, j, idx;
-	fftw_real  wn = (fftw_real)winWidth / (fftw_real)(DIM + 1);   // Grid cell width
-	fftw_real  hn = (fftw_real)winHeight / (fftw_real)(DIM + 1);  // Grid cell heigh
+	int        i, j;
+	double idx;
+	fftw_real  wn = (fftw_real)winWidth / (fftw_real)(vector_dim_x + 1);   // Grid cell width
+	fftw_real  hn = (fftw_real)winHeight / (fftw_real)(vector_dim_y + 1);  // Grid cell heigh
 
 	if (draw_smoke)
 	{	
@@ -296,15 +330,81 @@ void visualize(void)
 
 	if (draw_vecs)
 	{
+		fftw_real *vvx, *vvy;
+		fftw_real *scalar;
+
 		glBegin(GL_LINES);				//draw velocities
+		if (scalar_type == 0) {	// Velocity
+			scalar = vx;
+		}
+		else if (scalar_type == 1) { // Force
+			scalar = fx;
+		}
+		else { // Density
+			scalar = rho;
+		}
+
+		if (vector_type == 0) { // Velocity
+			vvx = vx;
+			vvy = vy;
+		}
+		else { // Force Field
+			vvx = fx;
+			vvy = fy;
+		}
+
+		for (i = 0; i < vector_dim_x; i++)
+			for (j = 0; j < vector_dim_y; j++)
+			{
+				double step_x = vector_dim_x / DIM;
+				double step_y = vector_dim_y / DIM;
+			
+				if (floor(step_x * i) == step_x * i && floor(step_y * j) == step_x * j) { // Current position is also in the grid
+					int idx = (int)step_y * j * DIM + step_x * i;
+
+					direction_to_color(vvx[idx], vvy[idx], color_dir);
+					glVertex2f(wn + (fftw_real)i * wn, hn + (fftw_real)j * hn);
+					glVertex2f((wn + (fftw_real)i * wn) + vec_scale * vvx[idx], (hn + (fftw_real)j * hn) + vec_scale * vvy[idx]);
+				}
+				else {
+					int floor_x = (int)floor(step_x * i);
+					int ceil_x = (int)ceil(step_x * i);
+					int floor_y = (int)floor(step_y * j);
+					int ceil_y = (int)ceil(step_y * j);
+
+					float vectorX = BilinearInterpolation(
+						(float)vvx[ceil_y * DIM + ceil_x],
+						(float)vvx[floor_y * DIM + ceil_x],
+						(float)vvx[ceil_y * DIM + floor_x],
+						(float)vvx[floor_y * DIM + floor_x],
+						1, 2, 1, 2,
+						step_x * i,
+						step_y * j
+					);
+					float vectorY = BilinearInterpolation(
+						(float)vvy[floor_y * DIM + floor_x],
+						(float)vvy[ceil_y * DIM + floor_x],
+						(float)vvy[floor_y * DIM + ceil_x],
+						(float)vvy[ceil_y * DIM + ceil_x],
+						1, 2, 1, 2,
+						step_x * i,
+						step_y * j
+					);
+
+					direction_to_color(vectorX, vectorY, color_dir);
+					glVertex2f(wn + (fftw_real)i * wn, hn + (fftw_real)j * hn);
+					glVertex2f((wn + (fftw_real)i * wn) + vec_scale * vectorX, (hn + (fftw_real)j * hn) + vec_scale * vectorY);
+				}
+			}
+		/*
 		for (i = 0; i < DIM; i++)
 			for (j = 0; j < DIM; j++)
 			{
 				idx = (j * DIM) + i;
-				direction_to_color(vx[idx],vy[idx],color_dir);
+				direction_to_color(vvx[idx], vvy[idx],color_dir);
 				glVertex2f(wn + (fftw_real)i * wn, hn + (fftw_real)j * hn);
-				glVertex2f((wn + (fftw_real)i * wn) + vec_scale * vx[idx], (hn + (fftw_real)j * hn) + vec_scale * vy[idx]);
-			}
+				glVertex2f((wn + (fftw_real)i * wn) + vec_scale * scalar[idx] * vvx[idx], (hn + (fftw_real)j * hn) + vec_scale * scalar[idx] * vvy[idx]);
+			}*/
 		glEnd();
 	}
 }
@@ -344,13 +444,21 @@ void keyboard(unsigned char key, int x, int y)
 	  case 'S': vec_scale *= 1.2; break;
 	  case 's': vec_scale *= 0.8; break;
 	  case 'V': visc *= 5; break;
-	  case 'vy': visc *= 0.2; break;
+	  case 'v': visc *= 0.2; break;
 	  case 'x': draw_smoke = 1 - draw_smoke; 
 		    if (draw_smoke==0) draw_vecs = 1; break;
 	  case 'y': draw_vecs = 1 - draw_vecs; 
 		    if (draw_vecs==0) draw_smoke = 1; break;
 	  case 'm': scalar_col++; if (scalar_col>COLOR_BANDS) scalar_col=COLOR_BLACKWHITE; break;
-	  case 'a': frozen = 1-frozen; break;
+	  case 'a': frozen = 1 - frozen; break;
+	  case 'g': scalar_type = rotational_increment(scalar_type, 3); printf("Scalar type set to: %d \n", scalar_type);  break;
+	  case 'G': vector_type = rotational_increment(vector_type, 2); printf("Vector type set to: %d \n", vector_type);  break;
+
+	  case 'o': vector_dim_x += 1; break;
+	  case 'O': vector_dim_x -= 1; break;
+
+	  case 'p': vector_dim_y += 1; break;
+	  case 'P': vector_dim_y -= 1; break;
 	  case 'q': exit(0);
 	}
 }
@@ -394,11 +502,14 @@ int main(int argc, char **argv)
 	printf("T/t:   increase/decrease simulation timestep\n");
 	printf("S/s:   increase/decrease hedgehog scaling\n");
 	printf("c:     toggle direction coloring on/off\n");
-	printf("V/vy:   increase decrease fluid viscosity\n");
+	printf("V/v:   increase decrease fluid viscosity\n");
 	printf("x:     toggle drawing matter on/off\n");
 	printf("y:     toggle drawing hedgehogs on/off\n");
 	printf("m:     toggle thru scalar coloring\n");
 	printf("a:     toggle the animation on/off\n");
+	printf("g/G:   Cycle through scalar/vector options \n");
+	printf("p/P:   Increase / decrease dimension x");
+	printf("o/O:   Increase / decrease dimension y");
 	printf("q:     quit\n\n");
 
 	glutInit(&argc, argv);
@@ -410,7 +521,6 @@ int main(int argc, char **argv)
 	glutIdleFunc(do_one_simulation_step);
 	glutKeyboardFunc(keyboard);
 	glutMotionFunc(drag);
-	
 	init_simulation(DIM);	//initialize the simulation data structures	
 	glutMainLoop();			//calls do_one_simulation_step, keyboard, display, drag, reshape
 	return 0;

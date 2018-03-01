@@ -1,4 +1,5 @@
-﻿  rplanner.c
+﻿D:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (D:\Github\ScientificVisualization\Smoke\bin\intermediate\Debug\) contains files shared from another project (Smoke.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  rplanner.c
   rgeneric.c
   rfftwnd.c
   rfftwf77.c
