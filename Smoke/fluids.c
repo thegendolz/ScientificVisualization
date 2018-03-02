@@ -353,12 +353,12 @@ void visualize(void)
 			vvy = fy;
 		}
 
+		double step_x = DIM / (double) vector_dim_x;
+		double step_y = DIM / (double) vector_dim_y;
+
 		for (i = 0; i < vector_dim_x; i++)
 			for (j = 0; j < vector_dim_y; j++)
 			{
-				double step_x = vector_dim_x / DIM;
-				double step_y = vector_dim_y / DIM;
-			
 				if (floor(step_x * i) == step_x * i && floor(step_y * j) == step_x * j) { // Current position is also in the grid
 					int idx = step_y * j * DIM + step_x * i;
 
@@ -367,10 +367,10 @@ void visualize(void)
 					glVertex2f((wn + (fftw_real)i * wn) + vec_scale * vvx[idx], (hn + (fftw_real)j * hn) + vec_scale * vvy[idx]);
 				}
 				else {
-					int floor_x = (int)floor(step_x * i);
-					int ceil_x = (int)ceil(step_x * i);
-					int floor_y = (int)floor(step_y * j);
-					int ceil_y = (int)ceil(step_y * j);
+					int floor_x = floor(step_x * i);
+					int ceil_x = ceil(step_x * i);
+					int floor_y = floor(step_y * j);
+					int ceil_y = ceil(step_y * j);
 
 					float vectorX = BilinearInterpolation(
 						(float)vvx[ceil_y * DIM + ceil_x],
@@ -390,7 +390,8 @@ void visualize(void)
 						step_x * i,
 						step_y * j
 					);
-
+				//	if (i == j == 0)
+					//	printf("Vector x: %f, Vector y: %f \n", vectorX, vectorY);
 					direction_to_color(vectorX, vectorY, color_dir);
 					glVertex2f(wn + (fftw_real)i * wn, hn + (fftw_real)j * hn);
 					glVertex2f((wn + (fftw_real)i * wn) + vec_scale * vectorX, (hn + (fftw_real)j * hn) + vec_scale * vectorY);
