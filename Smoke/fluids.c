@@ -76,6 +76,23 @@ void FFT(int direction,void* vx)
 int clamp(float x) 
 { return ((x)>=0.0?((int)(x)):(-((int)(1-(x))))); }
 
+void hsv2rgb(float *r, float *g, float *b, fftw_real h, float s, float v) {
+	int hueCase = (int)(h * 6);
+	float frac = 6 * h - hueCase;
+	float lx = v * (1 - s);
+	float ly = v * (1 - s * frac);
+	float lz = v * (1 - s * (1 - frac));
+
+	switch (hueCase) {
+		case 0:
+		case 6: *r = v; *g = lz; *b = lx; break;
+		case 1: *r = ly; *g = v; *b = lx; break;
+		case 2: *r = lx; *g = v; *b = lz; break;
+		case 3: *r = lx; *g = ly; *b = v; break;
+		case 4: *r = lz; *g = lx; *b = v; break;
+		case 5: *r = v; *g = lx; *b = ly; break;
+	}
+};
 
 int rotational_increment(int x, int max)
 {
@@ -86,9 +103,9 @@ int rotational_increment(int x, int max)
 }
 
 
-float BilinearInterpolation(float q11, float q12, float q21, float q22, float x1, float x2, float y1, float y2, float x, float y) //https://helloacm.com/cc-function-to-compute-the-bilinear-interpolation/
+double BilinearInterpolation(double q11, double q12, double q21, double q22, double x1, double x2, double y1, double y2, double x, double y) //https://helloacm.com/cc-function-to-compute-the-bilinear-interpolation/
 {
-	float x2x1, y2y1, x2x, y2y, yy1, xx1;
+	double x2x1, y2y1, x2x, y2y, yy1, xx1;
 	x2x1 = x2 - x1;
 	y2y1 = y2 - y1;
 	x2x = x2 - x;
@@ -253,35 +270,40 @@ void set_colormap(float vy)
    glColor3f(R,G,B);
 }
 
-
-//direction_to_color: Set the current color by mapping a direction vector (x,y), using
-//                    the color mapping method 'method'. If method==1, map the vector direction
-//                    using a rainbow colormap. If method==0, simply use the white color
-void direction_to_color(float x, float y, int method)
+void scalar_to_color(float x, float y, int method)
 {
-	float r,g,b,f;
-	if (method)
-	{
-	  f = atan2(y,x) / 3.1415927 + 1;
-	  r = f;
-	  if(r > 1) r = 2 - r;
-	  g = f + .66667;
-      if(g > 2) g -= 2;
-	  if(g > 1) g = 2 - g;
-	  b = f + 2 * .66667;
-	  if(b > 2) b -= 2;
-	  if(b > 1) b = 2 - b;
-	} 
-	else
-	{ r = g = b = 1; }
-	glColor3f(r,g,b);
+	float r, g, b, f;
+	if (method == 0) {
+		r = g = b = 1;
+	}
+	else if (method == 1) {
+		f = atan2(y, x) / 3.1415927 + 1;
+		r = f;
+		if (r > 1) r = 2 - r;
+		g = f + .66667;
+		if (g > 2) g -= 2;
+		if (g > 1) g = 2 - g;
+		b = f + 2 * .66667;
+		if (b > 2) b -= 2;
+		if (b > 1) b = 2 - b;
+	}
+	else if (method == 2) {
+		hsv2rgb(&r, &g, &b, *rho, 1, 1);
+	}
+	else if (method == 3) {
+		hsv2rgb(&r, &g, &b, *rho, 1, 1);
+		r = 1;
+		g = 0;
+		b = 0;
+	}
+	glColor3f(r, g, b);
 }
 
 //visualize: This is the main visualization function
 void visualize(void)
 {
 	int        i, j;
-	double idx;
+	int idx;
 	fftw_real  wn = (fftw_real)winWidth / (fftw_real)(vector_dim_x + 1);   // Grid cell width
 	fftw_real  hn = (fftw_real)winHeight / (fftw_real)(vector_dim_y + 1);  // Grid cell heigh
 
@@ -331,19 +353,8 @@ void visualize(void)
 	if (draw_vecs)
 	{
 		fftw_real *vvx, *vvy;
-		fftw_real *scalar;
 
-		glBegin(GL_LINES);				//draw velocities
-		if (scalar_type == 0) {	// Velocity
-			scalar = vx;
-		}
-		else if (scalar_type == 1) { // Force
-			scalar = fx;
-		}
-		else { // Density
-			scalar = rho;
-		}
-
+		glBegin(GL_LINES); 
 		if (vector_type == 0) { // Velocity
 			vvx = vx;
 			vvy = vy;
@@ -359,53 +370,57 @@ void visualize(void)
 		for (i = 0; i < vector_dim_x; i++)
 			for (j = 0; j < vector_dim_y; j++)
 			{
-				if (floor(step_x * i) == step_x * i && floor(step_y * j) == step_x * j) { // Current position is also in the grid
-					int idx = step_y * j * DIM + step_x * i;
+				double vectorX, vectorY;
 
-					direction_to_color(vvx[idx], vvy[idx], color_dir);
+				//VECTOR DIRECTION AND MAGNITUDE
+				if (floor(step_x * i) == step_x * i || floor(step_y * j) == step_y * j) {
+					idx = step_y * j * DIM + step_x * i;
+					vectorX = vvx[idx];
+					
+					scalar_to_color(vvx[idx], vvy[idx], scalar_type);
+
 					glVertex2f(wn + (fftw_real)i * wn, hn + (fftw_real)j * hn);
 					glVertex2f((wn + (fftw_real)i * wn) + vec_scale * vvx[idx], (hn + (fftw_real)j * hn) + vec_scale * vvy[idx]);
 				}
 				else {
+
 					int floor_x = floor(step_x * i);
 					int ceil_x = ceil(step_x * i);
 					int floor_y = floor(step_y * j);
 					int ceil_y = ceil(step_y * j);
 
-					float vectorX = BilinearInterpolation(
-						(float)vvx[ceil_y * DIM + ceil_x],
-						(float)vvx[floor_y * DIM + ceil_x],
-						(float)vvx[ceil_y * DIM + floor_x],
-						(float)vvx[floor_y * DIM + floor_x],
-						1, 2, 1, 2,
-						step_x * i,
-						step_y * j
+					vectorX = BilinearInterpolation(
+						vvx[ceil_y * DIM + ceil_x],
+						vvx[floor_y * DIM + ceil_x],
+						vvx[ceil_y * DIM + floor_x],
+						vvx[floor_y * DIM + floor_x],
+						floor_x,
+						ceil_x,
+						floor_y,
+						ceil_y,
+						step_x * (double)i,
+						step_y * (double)j
 					);
-					float vectorY = BilinearInterpolation(
-						(float)vvy[floor_y * DIM + floor_x],
-						(float)vvy[ceil_y * DIM + floor_x],
-						(float)vvy[floor_y * DIM + ceil_x],
-						(float)vvy[ceil_y * DIM + ceil_x],
-						1, 2, 1, 2,
-						step_x * i,
-						step_y * j
+
+					vectorY = BilinearInterpolation(
+						vvy[floor_y * DIM + floor_x],
+						vvy[ceil_y * DIM + floor_x],
+						vvy[floor_y * DIM + ceil_x],
+						vvy[ceil_y * DIM + ceil_x],
+						floor_x,
+						ceil_x,
+						floor_y,
+						ceil_y,
+						step_x * (double)i,
+						step_y * (double)j
 					);
-				//	if (i == j == 0)
-					//	printf("Vector x: %f, Vector y: %f \n", vectorX, vectorY);
-					direction_to_color(vectorX, vectorY, color_dir);
+					
+					scalar_to_color(vectorX, vectorY, scalar_type);
 					glVertex2f(wn + (fftw_real)i * wn, hn + (fftw_real)j * hn);
 					glVertex2f((wn + (fftw_real)i * wn) + vec_scale * vectorX, (hn + (fftw_real)j * hn) + vec_scale * vectorY);
 				}
 			}
-		/*
-		for (i = 0; i < DIM; i++)
-			for (j = 0; j < DIM; j++)
-			{
-				idx = (j * DIM) + i;
-				direction_to_color(vvx[idx], vvy[idx],color_dir);
-				glVertex2f(wn + (fftw_real)i * wn, hn + (fftw_real)j * hn);
-				glVertex2f((wn + (fftw_real)i * wn) + vec_scale * scalar[idx] * vvx[idx], (hn + (fftw_real)j * hn) + vec_scale * scalar[idx] * vvy[idx]);
-			}*/
+
 		glEnd();
 	}
 }
@@ -441,7 +456,7 @@ void keyboard(unsigned char key, int x, int y)
 	{
 	  case 't': dt -= 0.001; break;
 	  case 'T': dt += 0.001; break;
-	  case 'c': color_dir = 1 - color_dir; break;
+	  case 'c': scalar_type = rotational_increment(scalar_type, 4); printf("Scalar color type set to: %d \n", scalar_type);  break;
 	  case 'S': vec_scale *= 1.2; break;
 	  case 's': vec_scale *= 0.8; break;
 	  case 'V': visc *= 5; break;
@@ -452,7 +467,6 @@ void keyboard(unsigned char key, int x, int y)
 		    if (draw_vecs==0) draw_smoke = 1; break;
 	  case 'm': scalar_col++; if (scalar_col>COLOR_BANDS) scalar_col=COLOR_BLACKWHITE; break;
 	  case 'a': frozen = 1 - frozen; break;
-	  case 'g': scalar_type = rotational_increment(scalar_type, 3); printf("Scalar type set to: %d \n", scalar_type);  break;
 	  case 'G': vector_type = rotational_increment(vector_type, 2); printf("Vector type set to: %d \n", vector_type);  break;
 
 	  case 'o': vector_dim_x += 1; break;
@@ -502,20 +516,20 @@ int main(int argc, char **argv)
 	printf("Click and drag the mouse to steer the flow!\n");
 	printf("T/t:   increase/decrease simulation timestep\n");
 	printf("S/s:   increase/decrease hedgehog scaling\n");
-	printf("c:     toggle direction coloring on/off\n");
+	printf("c/C:   Cycle through scalar Color options\n");
 	printf("V/v:   increase decrease fluid viscosity\n");
 	printf("x:     toggle drawing matter on/off\n");
 	printf("y:     toggle drawing hedgehogs on/off\n");
 	printf("m:     toggle thru scalar coloring\n");
 	printf("a:     toggle the animation on/off\n");
-	printf("g/G:   Cycle through scalar/vector options \n");
+	printf("G:   Cycle through scalar/vector options \n");
 	printf("p/P:   Increase / decrease dimension x");
 	printf("o/O:   Increase / decrease dimension y");
 	printf("q:     quit\n\n");
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-	glutInitWindowSize(500,500);
+	glutInitWindowSize(900,900);
 	glutCreateWindow("Real-time smoke simulation and visualization");
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
