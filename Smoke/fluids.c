@@ -7,7 +7,12 @@
 #include <stdio.h>              //for printing the help text
 #include <math.h>              //for printing the help text
 
+/*  Macro for sin & cos in degrees */
+#define PI 3.1415926535898
+#define Cos(th) cos(PI/180*(th))
+#define Sin(th) sin(PI/180*(th))
 
+#define DEF_D 5
 
 //--- SIMULATION PARAMETERS ------------------------------------------------------------------------
 const int DIM = 50;				//size of simulation grid
@@ -354,7 +359,8 @@ void visualize(void)
 	{
 		fftw_real *vvx, *vvy;
 
-		glBegin(GL_LINES); 
+		glBegin(GL_TRIANGLES);
+
 		if (vector_type == 0) { // Velocity
 			vvx = vx;
 			vvy = vy;
@@ -372,53 +378,63 @@ void visualize(void)
 			{
 				double vectorX, vectorY;
 
-				//VECTOR DIRECTION AND MAGNITUDE
+				int floor_x = floor(step_x * i);
+				int ceil_x = ceil(step_x * i);
+				int floor_y = floor(step_y * j);
+				int ceil_y = ceil(step_y * j);
+
+				vectorX = BilinearInterpolation(
+					vvx[ceil_y * DIM + ceil_x],
+					vvx[floor_y * DIM + ceil_x],
+					vvx[ceil_y * DIM + floor_x],
+					vvx[floor_y * DIM + floor_x],
+					floor_x,
+					ceil_x,
+					floor_y,
+					ceil_y,
+					step_x * (double)i,
+					step_y * (double)j
+				);
+
+				vectorY = BilinearInterpolation(
+					vvy[floor_y * DIM + floor_x],
+					vvy[ceil_y * DIM + floor_x],
+					vvy[floor_y * DIM + ceil_x],
+					vvy[ceil_y * DIM + ceil_x],
+					floor_x,
+					ceil_x,
+					floor_y,
+					ceil_y,
+					step_x * (double)i,
+					step_y * (double)j
+				);
+
 				if (floor(step_x * i) == step_x * i || floor(step_y * j) == step_y * j) {
 					idx = step_y * j * DIM + step_x * i;
 					vectorX = vvx[idx];
-					
-					scalar_to_color(vvx[idx], vvy[idx], scalar_type);
-
-					glVertex2f(wn + (fftw_real)i * wn, hn + (fftw_real)j * hn);
-					glVertex2f((wn + (fftw_real)i * wn) + vec_scale * vvx[idx], (hn + (fftw_real)j * hn) + vec_scale * vvy[idx]);
+					vectorY = vvy[idx];
 				}
-				else {
 
-					int floor_x = floor(step_x * i);
-					int ceil_x = ceil(step_x * i);
-					int floor_y = floor(step_y * j);
-					int ceil_y = ceil(step_y * j);
+				scalar_to_color(vectorX, vectorY, scalar_type);
+				//glVertex2f(
+				//	wn + (fftw_real)i * wn,
+				//	hn + (fftw_real)j * hn
+				//);
+				//glVertex2f(
+				//	(wn + (fftw_real)i * wn) + vec_scale * vectorX, 
+				//	(hn + (fftw_real)j * hn) + vec_scale * vectorY
+				//);
 
-					vectorX = BilinearInterpolation(
-						vvx[ceil_y * DIM + ceil_x],
-						vvx[floor_y * DIM + ceil_x],
-						vvx[ceil_y * DIM + floor_x],
-						vvx[floor_y * DIM + floor_x],
-						floor_x,
-						ceil_x,
-						floor_y,
-						ceil_y,
-						step_x * (double)i,
-						step_y * (double)j
+				for (int k = 0; k <= 360; k += DEF_D) {
+					glVertex3f(
+						(wn + (fftw_real)i * wn) + vec_scale * vectorX,
+						(hn + (fftw_real)j * hn) + vec_scale * vectorY,
+						1
 					);
-
-					vectorY = BilinearInterpolation(
-						vvy[floor_y * DIM + floor_x],
-						vvy[ceil_y * DIM + floor_x],
-						vvy[floor_y * DIM + ceil_x],
-						vvy[ceil_y * DIM + ceil_x],
-						floor_x,
-						ceil_x,
-						floor_y,
-						ceil_y,
-						step_x * (double)i,
-						step_y * (double)j
-					);
-					
-					scalar_to_color(vectorX, vectorY, scalar_type);
-					glVertex2f(wn + (fftw_real)i * wn, hn + (fftw_real)j * hn);
-					glVertex2f((wn + (fftw_real)i * wn) + vec_scale * vectorX, (hn + (fftw_real)j * hn) + vec_scale * vectorY);
+					glVertex3f(wn + (fftw_real)i * wn + 4 * Cos(k), hn + (fftw_real)j * hn + 4 * Sin(k), 0);
+					glVertex3f(wn + (fftw_real)i * wn + 4 * Cos(k + DEF_D), hn + (fftw_real)j * hn + 4 * Sin(k + DEF_D), 0);
 				}
+
 			}
 
 		glEnd();
